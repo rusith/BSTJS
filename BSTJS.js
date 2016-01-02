@@ -7,14 +7,13 @@ BST.prototype = {
     //searching for a value using key. this returns the object of the same key
     //return null id not exist
     Search: function (key) {
-        if (this.root === null)
-            return null;
+        if (this.root === null) return null;
         var current = this.root;
 
         while (current) {
             if (key < current.data.key) current = current.left;
             else if (key > current.data.value) current = current.right;
-            else { return current.data }
+            else return current.data;
         }
         return null;
     },
@@ -22,23 +21,19 @@ BST.prototype = {
     //checking for contains a key
     //return boolean
     Contains: function (key) {
-        if (this.root === null)
-            return false;
+        if (this.root === null) return false;
         var current = this.root;
-
         while (current) {
             if (key < current.data.key) current = current.left;
             else if (key > current.data.key) current = current.right;
-            else { return true; }
+            else return true; 
         }
         return false;
     },
     
     //insert a node to the tree (object must have key property on it.)
     Insert: function (data) {
-        if (data.key === null)
-            return false;
-
+        if (data.key === null)  return false;
         var node = { data: data, left: null, right: null };
         var current = null;
 
@@ -48,13 +43,11 @@ BST.prototype = {
 
             while (true) {
                 if (data.key < current.data.key) {
-                    if (current.left === null)
-                        current.left = node;
+                    if (current.left === null) current.left = node;
                     else current = current.left;
                 }
                 else if (data.key > current.data.key) {
-                    if (current.right === null)
-                        current.right = node;
+                    if (current.right === null) current.right = node;
                     else current = current.right;
                 }
                 else break;
