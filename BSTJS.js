@@ -7,7 +7,7 @@ BST.prototype = {
     //searching for a value using key. this returns the object of the same key
     //return null id not exist
     Search: function (key) {
-        if (this.root === null) return null;
+        if (!this.root) return null;
         var current = this.root;
 
         while (current) {
@@ -21,7 +21,7 @@ BST.prototype = {
     //checking for contains a key
     //return boolean
     Contains: function (key) {
-        if (this.root === null) return false;
+        if (!this.root) return false;
         var current = this.root;
         while (current) {
             if (key < current.data.key) current = current.left;
@@ -33,21 +33,21 @@ BST.prototype = {
     
     //insert a node to the tree (object must have key property on it.)
     Insert: function (data) {
-        if (data.key === null)  return false;
+        if (!data.key)  return false;
         var node = { data: data, left: null, right: null };
         var current = null;
 
-        if (this.root == null) this.root = node;
+        if (!this.root) this.root = node;
         else {
             current = this.root;
 
             while (true) {
                 if (data.key < current.data.key) {
-                    if (current.left === null) current.left = node;
+                    if (!current.left) current.left = node;
                     else current = current.left;
                 }
                 else if (data.key > current.data.key) {
-                    if (current.right === null) current.right = node;
+                    if (!current.right) current.right = node;
                     else current = current.right;
                 }
                 else break;
@@ -67,9 +67,9 @@ BST.prototype = {
     Traverse: function (process) {
         function InOrder(node) {
             if (node) {
-                if (node.left !== null) InOrder(node.left);
+                if (node.left) InOrder(node.left);
                 process.call(this, node);
-                if (node.right !== null) InOrder(node.right);
+                if (node.right) InOrder(node.right);
             }
         }
         InOrder(this.root);
@@ -139,24 +139,24 @@ BST.prototype = {
         }
 
         if (found) {
-            ChildCount = (current.left !== null ? 1 : 0) + (current.right !== null ? 1 : 0);
+            ChildCount = (current.left ? 1 : 0) + (current.right ? 1 : 0);
             if (current === this.root) {
                 switch (ChildCount) {
                     case 0:
                         this.root = null;
                         break;
                     case 1:
-                        this.root = (current.right === null ? current.left : current.right);
+                        this.root = (!current.right ? current.left : current.right);
                         break;
                     case 2:
                         replacement = this.root.left;
 
-                        while (replacement.right !== null) {
+                        while (replacement.right) {
                             replacementParent = replacement;
                             replacement = replacement.right;
                         }
 
-                        if (replacementParent !== null) {
+                        if (replacementParent) {
                             replacementParent.right = replacement.left;
 
                             replacement.right = this.root.right;
@@ -176,17 +176,17 @@ BST.prototype = {
                         break;
                     case 1:
                         if (current.data.key < parent.data.key) {
-                            parent.left = (current.left === null ? current.right : current.left);
+                            parent.left = (!current.left ? current.right : current.left);
                         }
                         else {
-                            parent.right = (current.left === null ? current.right : current.left);
+                            parent.right = (!current.left ? current.right : current.left);
                         }
                         break;
                     case 2:
                         replacement = current.left;
                         replacementParent = current;
 
-                        while (replacement.right !== null) {
+                        while (replacement.right) {
                             replacementParent = replacement;
                             replacement = replacement.right;
                         }
